@@ -7,14 +7,12 @@ from .models import Post, Comment, Tag
 from .forms import PostForm, CommentForm, SignupForm, AuthForm
 import json
 import logging
-import configparser
+import os
 
 
-config = configparser.ConfigParser()
-config.read('cnf.ini')
 logging.basicConfig(
-    level=config['LOGGING']['level'],
-    filename=config['LOGGING']['filename']
+    level=os.environ.get('logType'),
+    filename=os.environ.get('pathType')
 )
 log = logging.getLogger(__name__)
 def mainPage(request):
