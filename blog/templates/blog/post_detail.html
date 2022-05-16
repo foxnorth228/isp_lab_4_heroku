@@ -2,24 +2,24 @@
 
 {% block content %}
     <div class="pubContainer">
-        {% if post.published_time %}
-            <div class="date">
-                {{ post.published_time }}
-            </div>
-        {% else %}
-            <a class="" href="{% url 'post_publish' usr=request.user.pk pk=post.pk %}">Publish</a>
-        {% endif %}
-        {% if user.is_authenticated %}
-            {% if request.user == post.author %}
+        {% if user.is_authenticated and request.user == post.author%}
+            {% if post.published_time %}
+                <div class="date">
+                    {{ post.published_time }}
+                </div>
+            {% else %}
+                <a class="" href="{% url 'post_publish' usr=request.user.pk pk=post.pk %}">Publish</a>
+            {% endif %}
             <div class="pubElCont">
                 <a class="iconPub iconPubPen" href="{% url 'post_edit' usr=request.user.pk pk=post.pk %}"><span class=""></span></a>
                 <a class="iconPub iconPubRemove" href="{% url 'post_remove' usr=request.user.pk pk=post.pk %}"><span class=""></span></a>
             </div>
-            {% endif %}
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
-        <a class="" href="{% url 'add_comment_to_post' usr=request.user.pk pk=post.pk %}">Add comment</a>
+        {% if user.is_authenticated %}
+            <a class="" href="{% url 'add_comment_to_post' usr=request.user.pk pk=post.pk %}">Add comment</a>
+        {% endif %}
         {% for comment in post.comments.all %}
             {% if user.is_authenticated or comment.approved_comment %}
             <div class="">

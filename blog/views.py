@@ -41,7 +41,7 @@ def login_user(request):
             user = form.get_user()
             if user is not None:
                 login(request, user)
-                return redirect('my_posts', usr=request.user.pk)
+                return redirect('main_page')
     else:
         form = AuthForm()
     return render(request,'register/login.html',{'form': form})
