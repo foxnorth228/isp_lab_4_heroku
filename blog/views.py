@@ -17,7 +17,7 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 def mainPage(request):
     posts = Post.objects.filter(published_date=timezone.now()).order_by('-published_time')
-    return render(request, 'blog/post_list.html', {'posts': posts})
+    return render(request, 'blog/post_list_main.html', {'posts': posts})
 
 def register_user(request):
     if request.method == 'POST':
