@@ -1,0 +1,41 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="pubContainer">
+        {% if post.published_time %}
+            <div class="date">
+                {{ post.published_time }}
+            </div>
+        {% else %}
+            <a class="" href="{% url 'post_publish' usr=request.user.pk pk=post.pk %}">Publish</a>
+        {% endif %}
+        {% if user.is_authenticated %}
+            {% if request.user == post.author %}
+            <div class="pubElCont">
+                <a class="iconPub iconPubPen" href="{% url 'post_edit' usr=request.user.pk pk=post.pk %}"><span class=""></span></a>
+                <a class="iconPub iconPubRemove" href="{% url 'post_remove' usr=request.user.pk pk=post.pk %}"><span class=""></span></a>
+            </div>
+            {% endif %}
+        {% endif %}
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text|linebreaksbr }}</p>
+        <a class="" href="{% url 'add_comment_to_post' usr=request.user.pk pk=post.pk %}">Add comment</a>
+        {% for comment in post.comments.all %}
+            {% if user.is_authenticated or comment.approved_comment %}
+            <div class="">
+                <div class="">
+                    {{ comment.created_time }}
+                    {% if not comment.approved_comment %}
+                        <a class="" href="{% url 'comment_remove' usr=request.user.pk pk=comment.pk %}"><span class=""></span></a>
+                        <a class="" href="{% url 'comment_approve' usr=request.user.pk pk=comment.pk %}"><span class=""></span></a>
+                    {% endif %}
+                </div>
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.text|linebreaks }}</p>
+            </div>
+            {% endif %}
+        {% empty %}
+            <p>No comments here yet :(</p>
+        {% endfor %}
+    </div>
+{% endblock %}

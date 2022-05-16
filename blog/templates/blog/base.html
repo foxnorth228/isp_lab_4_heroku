@@ -1,0 +1,54 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Челикс's Blog</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="{% static 'icons/favicon.ico' %}">
+        <link rel="stylesheet" href="/static/css/blog.css?{% now "U" %}">
+        <link rel="stylesheet" href="/static/css/publish.css?{% now "U" %}">
+    </head>
+    <body class="mainBody">
+        <header class="header">
+            <div class="flexIcons">
+                {% if user.is_authenticated %}
+                <div class="userBlock">
+                    <p class="userName">Hello, {{user.username}}</p>
+                    <a class="signLink" href="{% url 'logout'%}">Log out</a>
+                </div>
+                {% else %}
+                <div class="signBlock">
+                    <a class="signLink" href="{% url 'register' %}">Register</a>
+                    <a class="signLink" href="{% url 'login' %}">Log in</a>
+                </div>
+                {% endif %}
+            </div>
+            <p class="nameOfBlog">Челик's blog</p>
+            <div class="flexIcons">
+                <a href="{% url 'main_page'%}"class="iconCont"><div class="iconLink homeLink"></div></a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'post_new' usr=request.user.pk %}" class="iconCont"><div class="iconLink addLink"></div></a>
+                <a href="{% url 'post_draft_list' usr=request.user.pk %}" class="iconCont"><div class="iconLink boxLink"></div></a>
+                <a href="{% url 'my_posts' usr=request.user.pk %}" class="iconCont"><div class="iconLink listLink"></div></a>
+                {% endif %}
+            </div>
+        </header>
+        <main class="main">
+            <div class="container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+        <footer class="footer">
+            <a target="_blank" href="https://github.com/foxnorth228" class="iconCont">
+                <div class="iconLink githubLink"></div>
+            </a>
+            <p>2022, Саньчила</p>
+            <a target="_blank" href="https://www.bsuir.by/" class="iconCont" >
+                <div class="iconLink bsuirLink"></div>
+            </a>
+        </footer>
+    </body>
+</html>

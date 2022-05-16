@@ -1,0 +1,9 @@
+{% extends 'register/authorization.html' %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <h1 class="registerName">Регистрация</h1>
+    {{ form.as_p }}
+    <button type="submit">Зарегистрироваться</button>
+</form>
+{% endblock %}

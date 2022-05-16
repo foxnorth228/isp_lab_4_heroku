@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="blogPostsViews">
+    {% for post in posts %}
+        {% if request.user == post.author and post.published_time is not None%}
+            <div class="postView">
+                <div class="date">
+                    {{ post.published_time }}, {{ post.author }}
+                </div>
+                <h1><a href="{% url 'post_detail' usr=request.user.pk pk=post.pk %}">{{ post.title }}</a></h1>
+                <p>{{ post.text|linebreaksbr }}</p>
+                {% for tags in post.tags.all %}
+                    {{ tags.name }}
+                {% endfor %}
+                <a href="{% url 'post_detail' usr=request.user.pk pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

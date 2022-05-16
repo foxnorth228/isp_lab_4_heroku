@@ -1,0 +1,10 @@
+{% extends 'register/authorization.html' %}
+{% block content %}
+<form action="" method="POST" class="flex">
+    {% csrf_token %}
+    <h1>Вход</h1>
+    {{ form.as_p }}
+    <button type="submit" class="">Войти</button>
+    <a class="signLink" href="{% url 'register' %}" role="button">Зарегистрироваться</a>
+</form>
+{% endblock %}
