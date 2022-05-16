@@ -1,0 +1,5 @@
+myvenv/
+postgre.txt
+*.log
+mysite/logger.log
+__pycache__/
