@@ -13,7 +13,6 @@
                 {% for tags in post.tags.all %}
                     {{ tags.name }}
                 {% endfor %}
-                <a href="{% url 'post_detail' usr=request.user.pk pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
             </div>
         {% endif %}
     {% endfor %}
